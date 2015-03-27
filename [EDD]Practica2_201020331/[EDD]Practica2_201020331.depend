@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1427392934 source:c:\users\cristian\desktop\estructuras\[edd]practica2_201020331\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Nodo_arbol.h"
+
+1427389491 c:\users\cristian\desktop\estructuras\[edd]practica2_201020331\nodo_arbol.h
+

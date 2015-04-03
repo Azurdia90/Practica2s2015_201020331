@@ -3,6 +3,7 @@
 
  typedef struct Nodo_lista{
     int clave;
+    int pos;
     int stop;
     struct Nodo_lista *next;
     struct Nodo_lista *bak;

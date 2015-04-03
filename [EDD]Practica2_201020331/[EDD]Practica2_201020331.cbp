@@ -32,7 +32,10 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Arbol_AVL.h" />
+		<Unit filename="Lista_simple.h" />
+		<Unit filename="Manejo_archivo.h" />
 		<Unit filename="Nodo_arbol.h" />
+		<Unit filename="Nodo_lista.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

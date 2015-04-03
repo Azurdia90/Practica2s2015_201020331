@@ -1,9 +1,0 @@
-digraph Arbol {
-nodo9[shape=ellipse,label="nodo 9"];
-nodo15[shape=ellipse,label="nodo 15"];
-nodo15->nodo9;
-nodo15->nodo9;
-nodo56[shape=ellipse,label="nodo 56"];
-nodo100[shape=ellipse,label="nodo 100"];
-nodo100->nodo15;
-}

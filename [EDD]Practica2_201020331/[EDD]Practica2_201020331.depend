@@ -6,25 +6,25 @@
 
 1427389491 c:\users\cristian\desktop\estructuras\[edd]practica2_201020331\nodo_arbol.h
 
-1427865890 source:c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\main.c
+1428038353 source:c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\main.c
 	<stdio.h>
 	<stdlib.h>
-	<string.h>
-	"Nodo_arbol.h"
-	"Arbol_AVL.h"
-	"Lista_simple.h"
+	"Manejo_archivo.h"
 
 1427434476 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\nodo_arbol.h
 
 1427864197 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\arbol_avl.h
 	"Nodo_arbol.h"
 
-1427865690 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\lista_simple.h
+1428037337 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\lista_simple.h
 	"Nodo_lista.h"
-	"Raiz_lista.h"
 
-1427864064 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\nodo_lista.h
+1427932008 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\nodo_lista.h
 
-1427862664 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\raiz_lista.h
+1427913475 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\raiz_lista.h
 	"Nodo_lista.h"
+
+1428038484 c:\users\cristian\desktop\estructuras\practica2s2015_201020331\[edd]practica2_201020331\manejo_archivo.h
+	"Arbol_AVL.h"
+	"Lista_simple.h"
 

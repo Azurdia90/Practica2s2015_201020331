@@ -4,9 +4,8 @@
 #include "Nodo_lista.h"
 
 typedef struct Raiz_lista{
-    Node_list *first;
-    Node_list *last;
+    struct Nodo_lista *first;
+    struct Nodo_lista *last;
 }Root_list;
-
 
 #endif // RAIZ_LISTA_H_INCLUDED

@@ -18,6 +18,9 @@ void insertar(Node **raiz, int clave, int *h){
         insertar(&(*raiz)->left_son, clave, h);
         //cuando regrese verificamos el factor de equilibrio
         if(*h){//reducimos el factor de equilibrio
+
+
+
             switch((*raiz)->fe){
                 case 1:
                     (*raiz)->fe = 0;

@@ -2,7 +2,7 @@
 #define NODO_ARBOL_H_INCLUDED
 
 typedef struct node{
-    int iden;
+    long int iden;
     int fe;
     struct node *left_son;
     struct nodo *right_son;

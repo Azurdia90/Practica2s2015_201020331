@@ -4,7 +4,7 @@
 #include "Nodo_arbol.h"
 FILE *arbol;
 
-void insertar(Node **raiz, int clave, int *h){
+void insertar(Node **raiz, long int clave, int *h){
     Node *n1;
     Node *nuevo;
     if(!(*raiz)){
@@ -18,24 +18,22 @@ void insertar(Node **raiz, int clave, int *h){
         insertar(&(*raiz)->left_son, clave, h);
         //cuando regrese verificamos el factor de equilibrio
         if(*h){//reducimos el factor de equilibrio
-
-
-
             switch((*raiz)->fe){
                 case 1:
                     (*raiz)->fe = 0;
                     (*h)=0;
-                break;
+                    break;
                 case 0:
                     (*raiz)->fe = -1;
                     break;
                 case -1:
                     n1 = (*raiz)->left_son;
-                    if(n1->fe == -1){
-                        rotacion_II(raiz,n1);
+                    if(n1->fe <= 0){
+                        rotacion_II(&(*raiz),&n1);
                     }else{
-                        rotacion_ID(raiz,n1);
+                        rotacion_ID(&(*raiz),&n1);
                     }
+                    (*raiz)->fe =0;
                     (*h) = 0;
                     break;
             }//fin del switch
@@ -46,11 +44,12 @@ void insertar(Node **raiz, int clave, int *h){
             switch((*raiz)->fe){//aumentamos el factor de equilibrio
                 case 1:
                     n1 = (*raiz)->right_son;
-                    if(n1->fe == 1){
-                        rotacion_DD(raiz, n1);
+                    if(n1->fe >= 0){
+                        rotacion_DD(&(*raiz), &n1);
                     }else{
-                        rotacion_DI(raiz, n1);
+                        rotacion_DI(&(raiz), &n1);
                     }
+                    (*raiz)->fe = 0;
                     (*h) = 0;
                     break;
                 case 0:
@@ -63,64 +62,48 @@ void insertar(Node **raiz, int clave, int *h){
             }//fin del switch
         }//fin de la comprobacion de h
     }else{
-        printf("clave repetida");
-        (*h)=0;
+        printf("clave repetida\n");
     }//fin de la verficacion de la clave entrante
 }//fin del metodo de inserccion
-void rotacion_II(Node **node, Node *n1){
-    (*node)->left_son = n1->right_son;
-    n1->right_son = (node);
-
-    if(n1->fe == -1){
-        (*node)->fe = 0;
-        n1->fe = 0;
-    }else{
-        (*node)->fe=-1;
-        n1->fe = 1;
-    }
-    (*node) = n1;
+void rotacion_II(Node **node, Node **n1){
+    (*node)->left_son = (*n1)->right_son;
+    (*n1)->right_son = (*node);
+    //(*node)->fe = 0;
+    (*node) = (*n1);
 }//fin de la roatcion izquierda izquierda
-void rotacion_DD(Node **node, Node *n1){
-    (*node)->right_son = n1->left_son;
-    n1->left_son = (*node);
-    if(n1->fe == +1){
-        (*node)->fe=0;
-        n1->fe=0;
-    }else{
-        (*node)->fe=+1;
-        n1->fe=-1;
-    }
-    (*node) = n1;
+void rotacion_DD(Node **node, Node **n1){
+    (*node)->right_son = (*n1)->left_son;
+    (*n1)->left_son = (*node);
+    //(*node)->fe=0;
+    (*node) = (*n1);
 }
-void rotacion_ID(Node **node, Node *n1){
+void rotacion_ID(Node **node, Node **n1){
     Node *n2;
-
-    n2 = n1->right_son;
+    n2 = (*n1)->right_son;
     (*node)->left_son = n2->right_son;
-    n2->right_son = *node;
-    n1->right_son = n2->left_son;
-    n2->left_son = n1;
+    n2->right_son = (*node);
+    (*n1)->right_son = n2->left_son;
+    n2->left_son = (*n1);
     //se empieza a actualizar los factores de equilibrio
     if (n2->fe == +1){
-        n1->fe = -1;
+        (*n1)->fe = -1;
     }else{
-        n1->fe=0;
+        (*n1)->fe=0;
     }
     if(n2->fe == -1){
         (*node)->fe = 1;
     }else{
-        n1->fe = 0;
+        (*node)->fe = 0;
     }
-    n2->fe = 0;
     (*node)=n2;
 }
-void rotacion_DI(Node **node, Node *n1){
+void rotacion_DI(Node **node, Node **n1){
     Node *n2;
-    n2 = n1->left_son;
+    n2 = (*n1)->left_son;
     (*node)->right_son = n2->left_son;
-    n2->left_son = *node;
-    n1->left_son = n2->right_son;
-    n2->right_son = n1;
+    n2->left_son = (*node);
+    (*n1)->left_son = n2->right_son;
+    n2->right_son = (*n1);
     //actualizando los factores de equilibrio;
     if(n2->fe == 1){
         (*node)->fe =-1;
@@ -128,18 +111,17 @@ void rotacion_DI(Node **node, Node *n1){
         (*node)->fe = 0;
     }
     if(n2->fe == -1){
-        n1->fe = 1;
+        (*n1)->fe = 1;
     }else{
-        n1->fe = 0;
+        (*n1)->fe = 0;
     }
-    n2->fe = 0;
     (*node) = n2;
 }//fin de la rotacion derecha izquierda
 void imprimir(Node **raiz,int graf){
     if((*raiz)){//si la raiz tiene contenido
         imprimir(&(*raiz)->left_son,graf);
         if(graf !=1){//si el parametro es 0 solo imprime en consola
-            printf("%i\n",(*raiz)->iden);//se coloca en comillas que se imprimira un entero
+            printf("%li,",(*raiz)->iden);//se coloca en comillas que se imprimira un entero
         }else{              //luego de eso se coloca como parametro el entero que se enviara
             fprintf(arbol,"nodo%i[shape=ellipse,label=\"nodo %i\"];\n", (*raiz)->iden, (*raiz)->iden);
             if((*raiz)->left_son != NULL){//si el subarbol izquierdo no esta vacio

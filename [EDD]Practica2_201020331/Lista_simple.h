@@ -3,7 +3,7 @@
 
 #include "Nodo_lista.h"
 /************************************METODOS DE LA LISTA SIMPLE ENLAZADA***********************************************************/
-void insertar_lista(Node_list **first, Node_list **last, int clave, int pos){
+void insertar_lista(Node_list **first, Node_list **last,long int clave,long int pos){
     Node_list *nuevo = (Node_list*)malloc(sizeof(Node_list));
     nuevo->clave = clave;
     nuevo->pos = pos;
@@ -22,14 +22,13 @@ void insertar_lista(Node_list **first, Node_list **last, int clave, int pos){
 void imprimir_lista(Node_list **first){
     if((*first)){//si la lista no esta vacia
         Node_list *aux = (*first);//nodo para recorrer la lista
-        printf("valores de la raiz:\n");
         while(aux != NULL){//mientras el nodo no este vacio
-            printf("%i\n",aux->clave);
+            printf("%i,",aux->clave);
             aux = aux->next;
         }//fin del recorrido de la lista
     }//fin de la comprobacion si a lista no esta vacia
 }//fin del mentodo imprimir lista
-Node_list* buscar_lista_izquierda(Node_list **first, int pos){
+Node_list* buscar_lista_izquierda(Node_list **first,long int pos){
     Node_list *aux = NULL;
     if((*first)){//si la lista no esta vacia
         Node_list *aux2 = (*first);//nos colocamos al inicio de la lista
@@ -44,7 +43,7 @@ Node_list* buscar_lista_izquierda(Node_list **first, int pos){
     }//fin de la comprobaion si la lista esta vacia
     return aux;
 }//fin del metodo buscar en la lista
-Node_list* buscar_lista_derecha(Node_list **last, int pos){
+Node_list* buscar_lista_derecha(Node_list **last,long int pos){
     Node_list *aux = NULL;
     if((*last)){//si la lista no esta vacia
         Node_list *aux2 = (*last);//nos colocamos al inicio de la lista
@@ -88,7 +87,7 @@ void ordenar_burbuja(Node_list **first){
     }//FIN de la comprobacion si esta vacia o todos bloqueados
 }//fin del metodo del ordenamiento burbuja
 /*************************************************ORDENAMIENTO QUICKSORT**************************/
-void ordenamiento_quicksort(Node_list **first, Node_list **last,int primero, int ultimo){
+void ordenamiento_quicksort(Node_list **first, Node_list **last,long int primero,long int ultimo){
     int primas, ultimas, centro;
     int pivote; //guardara el valor del centro de la lista o sublista
 

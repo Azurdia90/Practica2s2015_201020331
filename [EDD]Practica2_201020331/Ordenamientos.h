@@ -1,7 +1,7 @@
 #ifndef ORDENAMIENTOS_H_INCLUDED
 #define ORDENAMIENTOS_H_INCLUDED
 
-void ordenar_burbuja(long int buble[], long int n){
+void ordenar_burbuja(long int *buble, long int n){
     long int i,j;
     long int temp;
 
@@ -15,7 +15,7 @@ void ordenar_burbuja(long int buble[], long int n){
         }
     }
 }
-void ordenamiento_quick(long int quicksort[], long int primero, long int ultimo){
+void ordenamiento_quick(long int *quicksort, long int primero, long int ultimo){
     long int i, j, central;
     long int pivote;
 

@@ -71,11 +71,15 @@ void insertar(Node **raiz, long int clave){
     if(!(*raiz)){
         Node *nuevo;
         nuevo = (Node*)malloc(sizeof(Node));
-        nuevo->iden = clave;
-        nuevo->a =0;
-        nuevo->left_son = NULL;
-        nuevo->right_son = NULL;
-        *raiz = nuevo;
+        if(nuevo != NULL){//si es posible reservar memoria
+            nuevo->iden = clave;
+            nuevo->a =0;
+            nuevo->left_son = NULL;
+            nuevo->right_son = NULL;
+            *raiz = nuevo;
+        }else{
+            printf("NO PUDO SER RESERVADA LA MEMORIA");
+        }
     }else{
         if((*raiz)->iden > clave){
             insertar(&(*raiz)->left_son,clave);
@@ -115,5 +119,11 @@ void graficar(Node **raiz){
         system("%GRAFICAR% -Tjpg C:\\Practica2\\grafica.dot -o C:\\Practica2\\grafica.jpg");
     }
 }//fin del metodo graficar
-
+void destructor_arbol(Node **raiz){
+    if((*raiz)){
+        destructor_arbol(&(*raiz)->left_son);
+        destructor_arbol(&(*raiz)->right_son);
+        free((*raiz));
+    }
+}
 #endif // ARBOL_AVL_H_INCLUDED

@@ -2,30 +2,28 @@
 #define MANEJO_ARCHIVO_H_INCLUDED
 #include <time.h>
 #include "Arbol_AVL.h"
-#include "Lista_simple.h"
+#include "Ordenamientos.h"
 
-int h=0;
-long int cont=0;
+long int cont=1;
 char *path;
+//raiz del arbol avl
 Node *root;
-clock_t inicio_1;
-clock_t inicio_2;
-clock_t inicio_3;
-clock_t fin_1;
-clock_t fin_2;
-clock_t fin_3;
-double total1;
-double total2;
-double total3;
-//raiz que maneja la lista de ordenamiento burbuja
-Node_list *first_buble;
-Node_list *last_buble;
-//raiz que menja la lista de ordenamiento quicksort
-Node_list *first_quick;
-Node_list *last_quick;
+//variables para el conteo de tiempo
+clock_t inicio_1;//inicio de la inserccion en el arbol
+clock_t inicio_2;//inicio del recorrido del arbol
+clock_t inicio_3;//inicio del ordenamiento burbuja
+clock_t inicio_4;//inicio del ordenamiento quicksort
+clock_t fin_1;//fin de la inserccion del arbol
+clock_t fin_2;//fin del recorrido del arbol
+clock_t fin_3;//fin del ordenamiento burbuja
+clock_t fin_4;//fin del ordenamiento quicksort
+float total1;//tiempo total de la inserccion en el arbol
+float total2;//tiempo total del recorrido del arbol
+float total3;//tiempo total del ordenamiento burbuja
+float total4;//teimpo total del ordenamiento quickaort
 //puntero que maneja el archivo de entrada
 FILE *archivo_entrada;
-
+//File *grafica_arbol;
 void menu(){
     printf("\n BIENVENIDOS \n");
     printf("\n\n\n");
@@ -36,7 +34,15 @@ void menu(){
 }//fin del metodo menu
 void leer_archivo(){//metpdp qie se lee el archivo y se inserta en el arbol AVL
     archivo_entrada = fopen(path,"r");
-    if(archivo_entrada != NULL){
+    //grafica_arbol = fopen("C:\\Practica2\\grafica.dat","w");
+    if(archivo_entrada != NULL ){
+        char a[15];
+        while(!feof(archivo_entrada)){
+        fgets(a,sizeof(a),archivo_entrada);
+        cont = cont + 1;
+        }
+        fclose(archivo_entrada);
+        inicio_1 = clock();
         cargar_datos1();
     }else{
         system("CLS");
@@ -45,66 +51,72 @@ void leer_archivo(){//metpdp qie se lee el archivo y se inserta en el arbol AVL
     }
 }//fin del metodo leer archivo
 void cargar_datos1(){
-    char a[2000];
+    archivo_entrada = fopen(path,"r");
+    char a[25];
     root = NULL;
-    inicio_1 = clock();
     while(!feof(archivo_entrada)){
-        fgets(a,2000,archivo_entrada);
+        fgets(a,sizeof(a),archivo_entrada);
         long int b = atoi(a);
-        insertar(&root,b,&h);
+        //insertar(&root,b);
     }
     fclose(archivo_entrada);
     fin_1 = clock();
-    total1 = ((double)fin_1 - inicio_1)/CLOCKS_PER_SEC;
     cargar_datos2();
 }
 void cargar_datos2(){
     archivo_entrada = fopen(path,"r");
-    cont = 0;
+    long int buble[cont];
+    long int c = 0;
     char a[15];
-    first_buble = NULL;
-    last_buble = NULL;
-    inicio_2 = clock();
     while(!feof(archivo_entrada)){
-        fgets(a,15,archivo_entrada);
+        fgets(a,sizeof(a),archivo_entrada);
         long int b = atoi(a);
-        insertar_lista(&first_buble,&last_buble,b,cont);
-        cont = cont + 1;
+        //buble[c] = b;
+        c++;
     }
     fclose(archivo_entrada);
-    fin_2 = clock();
-    total2 = ((double)fin_2 - inicio_2)/CLOCKS_PER_SEC;
-    cargar_datos3();
+    cargar_datos3(buble);
 }
-void cargar_datos3(){
+void cargar_datos3(long int buble[]){
     archivo_entrada = fopen(path,"r");
-    char a[15];
-    first_quick = NULL;
-    last_quick = NULL;
-    inicio_3 = clock();
+    long int quick[cont];
+    long int c = 0;
+    char a[25];
     while(!feof(archivo_entrada)){
-        fgets(a,15,archivo_entrada);
+        fgets(a,sizeof(a),archivo_entrada);
         long int b = atoi(a);
-        insertar_lista(&first_quick,&last_quick,b,cont);
-        cont = cont + 1;
+        //quick[c] = b;
+        c++;
     }
     fclose(archivo_entrada);
-    fin_3 = clock();
-    total3 = ((double)fin_3 - inicio_3)/CLOCKS_PER_SEC;
-    resultados();
+    resultados(buble, quick);
 }
-void resultados(){
-    printf("\nEl recorrido In Orden es:\n");
-    imprimir(&root,0);
-
-    ordenar_burbuja(&first_buble);
-    ordenamiento_quicksort(&first_quick,&last_quick, first_quick->pos,last_quick->pos);
-    printf("\nREsultado ordenamiento burbuja es:\n");
-    imprimir_lista(&first_buble);
+void resultados(long int bubble[], long int quick[]){
+    cont = cont -1;
+    int long c=0;
+    printf("\nEl recorrido In Orden del arbol es:\n");
+    inicio_2 = clock();
+    //imprimir(&root,0);
+    fin_2 =clock();
+    total2 = ((float)(fin_2 - inicio_2)/CLOCKS_PER_SEC);
+    inicio_3 = clock();
+    //ordenar_burbuja(bubble,cont);
+    fin_3 = clock();
+    total3 = ((float)(fin_3 - inicio_3)/CLOCKS_PER_SEC);
+    inicio_4 = clock();
+    //ordenamiento_quick(quick, 0, cont);
+    fin_4 = clock();
+    total4 = ((float)(fin_4 - inicio_4)/CLOCKS_PER_SEC);
     printf("\nREsultado ordenamiento quicksort es:\n");
-    imprimir_lista(&first_quick);
+    for(c; c<cont; c++){
+        //printf("%li,",quick[c]);
+    }
+    total1 = ((float)(fin_1 - inicio_1)/CLOCKS_PER_SEC);
+    printf("\nTiempo de inserccion en el arbol es: %f segundos \n", total1);
+    printf("\nTiempo de recorrido del arbol es: %f segundos \n", total2);
+    printf("\nTiempo de ordenamiento bubblesort es: %f segundos \n", total3);
+    printf("\nTiempo de ordenamiento quicksort es: %f segundos \n", total4);
     //graficar(&root);
-    system("PAUSE");
 }//fin de resultados
 
 #endif // MANEJO_ARCHIVO_H_INCLUDED

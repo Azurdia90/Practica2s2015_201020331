@@ -23,7 +23,7 @@ void imprimir_lista(Node_list **first){
     if((*first)){//si la lista no esta vacia
         Node_list *aux = (*first);//nodo para recorrer la lista
         while(aux != NULL){//mientras el nodo no este vacio
-            printf("%i,",aux->clave);
+            printf("%li,",aux->clave);
             aux = aux->next;
         }//fin del recorrido de la lista
     }//fin de la comprobacion si a lista no esta vacia

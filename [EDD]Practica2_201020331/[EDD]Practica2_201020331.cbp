@@ -36,6 +36,7 @@
 		<Unit filename="Manejo_archivo.h" />
 		<Unit filename="Nodo_arbol.h" />
 		<Unit filename="Nodo_lista.h" />
+		<Unit filename="Ordenamientos.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

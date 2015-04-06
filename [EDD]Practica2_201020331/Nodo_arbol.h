@@ -3,9 +3,9 @@
 
 typedef struct node{
     long int iden;
-    int fe;
+    int a;
     struct node *left_son;
-    struct nodo *right_son;
+    struct node *right_son;
 }Node;
 
 

@@ -7,7 +7,7 @@ FILE *grafica2;
 
 int altura(Node *n){
     if (n==NULL){
-        return -1;
+        return 0;
     }else{
         return n->a;
     }
@@ -18,9 +18,9 @@ void actualizar_altura(Node *n){
         int y = altura(n->right_son);
         if( x > y){
             n->a = x + 1;
-        }else if(x>y){
+        }else if(x < y){
             n->a = y + 1;
-        }else{
+        }else if( x == y){
             n->a = 0;
         }
     }
@@ -56,13 +56,13 @@ void balancear(Node **n){
             if(altura((*n)->left_son->left_son)>=altura((*n)->left_son->right_son)){
                 rotacion_simple(n,1);
             }else{
-                rotacion_simple(n,1);
+                rotacion_doble(n,1);
             }
         }else if(altura((*n)->right_son)-altura((*n)->left_son) ==2){
             if(altura((*n)->right_son->right_son)>=altura((*n)->right_son->left_son)){
                     rotacion_simple(n,0);
                }else{
-                   rotacion_simple(n,0);
+                   rotacion_doble(n,0);
                }
         }
     }
@@ -83,11 +83,11 @@ void insertar(Node **raiz, long int clave){
     }else{
         if((*raiz)->iden > clave){
             insertar(&(*raiz)->left_son,clave);
-        }else if((*raiz)->iden<clave){
+        }else if((*raiz)->iden < clave){
             insertar(&(*raiz)->right_son,clave);
         }
        balancear(raiz);
-       actualizar_altura((*raiz));
+       actualizar_altura(*raiz);
     }//fin de la verficacion de la clave entrante
 }//fin del metodo de inserccion
 
@@ -110,24 +110,29 @@ void destructor_arbol(Node **raiz){
     }
 }
 void graficar(Node **raiz){
-    arbol = fopen("C:\\Practica2\\grafica.dot","w");
-    if(arbol!=NULL){
-        fprintf(arbol,"digraph Arbol {\n");
-        graficar2(&(*raiz));
-        fprintf(arbol,"}");
-        fclose(arbol);
-        system("%GRAFICAR% -Tjpg C:\\Practica2\\grafica.dot -o C:\\Practica2\\grafica.jpg");
+    if((*raiz)){
+        arbol = fopen("C:\\Practica2\\grafica.dot","w");
+        if(arbol!=NULL){
+            fprintf(arbol,"digraph Arbol {\n");
+            fprintf(arbol,"size = \"8.5,10\";ratio = auto;\n");
+            graficar2(&(*raiz));
+            fprintf(arbol,"}");
+            fclose(arbol);
+            system("%GRAFICAR% -Tjpg C:\\Practica2\\grafica.dot -o C:\\Practica2\\grafica.jpg");
+        }
     }
 }//fin del metodo graficar
 void graficar2(Node **raiz){
-    graficar2(&(*raiz)->left_son);
-    fprintf(arbol,"nodo%li[shape=ellipse,label=\"nodo %li\"];\n", (*raiz)->iden, (*raiz)->iden);
-    if((*raiz)->left_son != NULL){//si el subarbol izquierdo no esta vacio
-        fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->left_son->iden);
-    }//fin de la comprobacion
-    if((*raiz)->right_son != NULL){//si el subarbol derecho no esta vacio
-        fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->right_son->iden);
-    }//fin de la comprobacion
-    graficar2(&(*raiz)->right_son);
+    if((*raiz)){
+        graficar2(&(*raiz)->left_son);
+        fprintf(arbol,"nodo%li[shape=ellipse,label=\"nodo %li\"];\n", (*raiz)->iden, (*raiz)->iden);
+        if((*raiz)->left_son != NULL){//si el subarbol izquierdo no esta vacio
+            fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->left_son->iden);
+        }//fin de la comprobacion
+        if((*raiz)->right_son != NULL){//si el subarbol derecho no esta vacio
+            fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->right_son->iden);
+        }//fin de la comprobacion
+        graficar2(&(*raiz)->right_son);
+    }
 }
 #endif // ARBOL_AVL_H_INCLUDED

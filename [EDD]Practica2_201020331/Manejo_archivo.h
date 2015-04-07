@@ -72,13 +72,19 @@ void cargar_datos1(){
     fclose(grafica1);
     fclose(archivo_entrada);
     fin_1 = clock();
-    datos = 1;
     grafica2 = fopen("C:\\Practica2\\recorrido_avl.dat","w");
     printf("\nEl recorrido In Orden del arbol es:\n");
+    datos = 1;
     inicio_2 = clock();
     imprimir(&root,inicio_2, &datos,grafica2);
     fin_2 =clock();
     fclose(grafica2);
+    int decision;
+    printf("\n\nDesea graficar el arbol? (1=si/0=no): \n");
+    scanf("%i", &decision);
+    if ( decision == 1){
+        graficar(&root);
+    }
     cargar_datos2();
 }
 void cargar_datos2(){
@@ -138,7 +144,7 @@ void resultados(){
     printf("\nTiempo de recorrido del arbol es: %f segundos \n", total2);
     printf("\nTiempo de ordenamiento bubblesort es: %f segundos \n", total3);
     printf("\nTiempo de ordenamiento quicksort es: %f segundos \n", total4);
-    //graficar(&root);
+    system("PAUSE");
 }//fin de resultados
 
 #endif // MANEJO_ARCHIVO_H_INCLUDED

@@ -1,9 +1,9 @@
 #ifndef ARBOL_AVL_H_INCLUDED
 #define ARBOL_AVL_H_INCLUDED
-
+#include <time.h>
 #include "Nodo_arbol.h"
 FILE *arbol;
-
+FILE *grafica2;
 
 int altura(Node *n){
     if (n==NULL){
@@ -91,39 +91,43 @@ void insertar(Node **raiz, long int clave){
     }//fin de la verficacion de la clave entrante
 }//fin del metodo de inserccion
 
-void imprimir(Node **raiz,int graf){
+void imprimir(Node **raiz,clock_t inicio, long int *datos, FILE *grafica2){
     if((*raiz)){//si la raiz tiene contenido
-        imprimir(&(*raiz)->left_son,graf);
-        if(graf !=1){//si el parametro es 0 solo imprime en consola
-            printf("%li,",(*raiz)->iden);//se coloca en comillas que se imprimira un entero
-        }else{              //luego de eso se coloca como parametro el entero que se enviara
-            fprintf(arbol,"nodo%li[shape=ellipse,label=\"nodo %li\"];\n", (*raiz)->iden, (*raiz)->iden);
-            if((*raiz)->left_son != NULL){//si el subarbol izquierdo no esta vacio
-                fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->left_son->iden);
-            }//fin de la comprobacion
-            if((*raiz)->right_son != NULL){//si el subarbol derecho no esta vacio
-                //fprintf(arbol,"nodo%i->nodo%i;\n",(*raiz)->iden,(*raiz)->right_son->iden);
-            }//fin de la comprobacion
-        }//si el valor era 1 se tuvo que imprimir en el archivo
-        imprimir(&(*raiz)->right_son,graf);
+        imprimir(&(*raiz)->left_son,inicio, datos, grafica2);
+        printf("%li,",(*raiz)->iden);//se coloca en comillas que se imprimira un enteroo
+        clock_t aux_f =clock();
+        fprintf(grafica2,"%f %li \n",((aux_f - inicio)/(float)CLOCKS_PER_SEC),*datos);
+        (*datos)++;
+        imprimir(&(*raiz)->right_son,inicio, datos, grafica2);
     }//fin del if
 }//fin del metodo imprimir
 
-void graficar(Node **raiz){
-    arbol = fopen("C:\\Practica2\\grafica.dot","w");
-    if(arbol!=NULL){
-        fprintf(arbol,"digraph Arbol {\n");
-        imprimir(&(*raiz),1);
-        fprintf(arbol,"}");
-        fclose(arbol);
-        system("%GRAFICAR% -Tjpg C:\\Practica2\\grafica.dot -o C:\\Practica2\\grafica.jpg");
-    }
-}//fin del metodo graficar
 void destructor_arbol(Node **raiz){
     if((*raiz)){
         destructor_arbol(&(*raiz)->left_son);
         destructor_arbol(&(*raiz)->right_son);
         free((*raiz));
     }
+}
+void graficar(Node **raiz){
+    arbol = fopen("C:\\Practica2\\grafica.dot","w");
+    if(arbol!=NULL){
+        fprintf(arbol,"digraph Arbol {\n");
+        graficar2(&(*raiz));
+        fprintf(arbol,"}");
+        fclose(arbol);
+        system("%GRAFICAR% -Tjpg C:\\Practica2\\grafica.dot -o C:\\Practica2\\grafica.jpg");
+    }
+}//fin del metodo graficar
+void graficar2(Node **raiz){
+    graficar2(&(*raiz)->left_son);
+    fprintf(arbol,"nodo%li[shape=ellipse,label=\"nodo %li\"];\n", (*raiz)->iden, (*raiz)->iden);
+    if((*raiz)->left_son != NULL){//si el subarbol izquierdo no esta vacio
+        fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->left_son->iden);
+    }//fin de la comprobacion
+    if((*raiz)->right_son != NULL){//si el subarbol derecho no esta vacio
+        fprintf(arbol,"nodo%li->nodo%li;\n",(*raiz)->iden,(*raiz)->right_son->iden);
+    }//fin de la comprobacion
+    graficar2(&(*raiz)->right_son);
 }
 #endif // ARBOL_AVL_H_INCLUDED

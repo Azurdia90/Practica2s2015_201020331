@@ -5,6 +5,7 @@
 #include "Ordenamientos.h"
 
 long int cont=1;
+long int datos=1;
 char *path;
 //raiz del arbol avl
 Node *root;
@@ -25,7 +26,10 @@ float total3;//tiempo total del ordenamiento burbuja
 float total4;//teimpo total del ordenamiento quickaort
 //puntero que maneja el archivo de entrada
 FILE *archivo_entrada;
-//File *grafica_arbol;
+FILE *grafica1;
+FILE *grafica2;
+FILE *grafica3;
+FILE *grafica4;
 void menu(){
     printf("\n BIENVENIDOS \n");
     printf("\n\n\n");
@@ -36,7 +40,6 @@ void menu(){
 }//fin del metodo menu
 void leer_archivo(){//metpdp qie se lee el archivo y se inserta en el arbol AVL
     archivo_entrada = fopen(path,"r");
-    //grafica_arbol = fopen("C:\\Practica2\\grafica.dat","w");
     if(archivo_entrada != NULL ){
         char a[15];
         while(!feof(archivo_entrada)){
@@ -44,6 +47,7 @@ void leer_archivo(){//metpdp qie se lee el archivo y se inserta en el arbol AVL
         cont = cont + 1;
         }
         fclose(archivo_entrada);
+        cont = cont -1;
         inicio_1 = clock();
         cargar_datos1();
     }else{
@@ -54,19 +58,27 @@ void leer_archivo(){//metpdp qie se lee el archivo y se inserta en el arbol AVL
 }//fin del metodo leer archivo
 void cargar_datos1(){
     archivo_entrada = fopen(path,"r");
+    grafica1 = fopen("C:\\Practica2\\inserccion_avl.dat","w");
     char a[25];
     root = NULL;
     while(!feof(archivo_entrada)){
         fgets(a,sizeof(a),archivo_entrada);
         long int b = atoi(a);
         insertar(&root,b);
+        clock_t aux_f = clock();
+        fprintf(grafica1,"%f %li \n",((aux_f - inicio_1)/(float)CLOCKS_PER_SEC),datos);
+        datos++;
     }
+    fclose(grafica1);
     fclose(archivo_entrada);
     fin_1 = clock();
+    datos = 1;
+    grafica2 = fopen("C:\\Practica2\\recorrido_avl.dat","w");
     printf("\nEl recorrido In Orden del arbol es:\n");
     inicio_2 = clock();
-    imprimir(&root,0);
+    imprimir(&root,inicio_2, &datos,grafica2);
     fin_2 =clock();
+    fclose(grafica2);
     cargar_datos2();
 }
 void cargar_datos2(){
@@ -82,9 +94,12 @@ void cargar_datos2(){
         c++;
     }
     fclose(archivo_entrada);
+    grafica3 = fopen("C:\\Practica2\\ordenamiento_bubble.dat","w");
+    datos = cont;
     inicio_3 = clock();
-    ordenar_burbuja(buble,cont);
+    ordenar_burbuja(buble,cont,grafica3,inicio_3);
     fin_3 = clock();
+    fclose(grafica3);
     cargar_datos3();
 }
 void cargar_datos3(){
@@ -103,11 +118,13 @@ void cargar_datos3(){
     resultados();
 }
 void resultados(){
-    cont = cont -1;
     int long c=0;
+    grafica4 = fopen("C:\\Practica2\\ordenamiento_quick.dat","w");
+    datos = 1;
     inicio_4 = clock();
-    ordenamiento_quick(quick, 0, cont);
+    ordenamiento_quick(quick, 0, cont,datos, &datos, grafica4);
     fin_4 = clock();
+    fclose(grafica4);
     printf("\nREsultado ordenamiento quicksort es:\n");
     for(c; c<cont; c++){
         printf("%li,",quick[c]);

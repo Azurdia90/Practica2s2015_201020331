@@ -1,10 +1,11 @@
 #ifndef ORDENAMIENTOS_H_INCLUDED
 #define ORDENAMIENTOS_H_INCLUDED
+#include <time.h>
 
-void ordenar_burbuja(long int *buble, long int n){
+void ordenar_burbuja(long int *buble, long int n, FILE *grafica3, clock_t inicio){
     long int i,j;
     long int temp;
-
+    int datos = 1;
     for(i = 0; i<(n -1); i++){
         for(j = 0; j < (n-i-1); j++){
             if(buble[j]>buble[j+1]){
@@ -13,9 +14,12 @@ void ordenar_burbuja(long int *buble, long int n){
                 buble[j+1] = temp;
             }
         }
+        clock_t aux_f = clock();
+        fprintf(grafica3,"%f %i \n",((aux_f-inicio)/(float)CLOCKS_PER_SEC),datos);
+        datos++;
     }
 }
-void ordenamiento_quick(long int *quicksort, long int primero, long int ultimo){
+void ordenamiento_quick(long int *quicksort, long int primero, long int ultimo,clock_t inicio,long int *datos, FILE *grafica4){
     long int i, j, central;
     long int pivote;
 
@@ -38,11 +42,18 @@ void ordenamiento_quick(long int *quicksort, long int primero, long int ultimo){
         }
     }while(i<=j);
         if(primero<j){
-            ordenamiento_quick(quicksort, primero, j);
+            ordenamiento_quick(quicksort, primero, j, inicio, datos, grafica4);
+            clock_t aux_f = clock();
+            fprintf(grafica4,"%f %i \n",((aux_f-inicio)/(float)CLOCKS_PER_SEC),*datos);
+            (*datos)++;
         }
         if(i<ultimo){
-            ordenamiento_quick(quicksort, i, ultimo);
+            ordenamiento_quick(quicksort, i, ultimo, inicio, datos, grafica4);
+            clock_t aux_f = clock();
+            fprintf(grafica4,"%f %i \n",((aux_f-inicio)/(float)CLOCKS_PER_SEC),*datos);
+            (*datos)++;
         }
+
 }
 
 

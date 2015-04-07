@@ -15,7 +15,7 @@ void rotacion_II(Node **node, Node *n1);
 void rotacion_DD(Node **node, Node *n1);
 void rotacion_ID(Node **node, Node *n1);
 void rotacion_DI(Node **node, Node *n1);
-void imprimir(Node **raiz,int graf);
+void imprimir(Node **raiz,clock_t inicio, long int *datos, FILE *grafica2);
 void graficar(Node **raiz);
 
 /*********************************METODO MAIN DE LA PRACTICA************************************/
